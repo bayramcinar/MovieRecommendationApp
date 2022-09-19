@@ -13,7 +13,7 @@ liste = []
 
 r = requests.get("https://www.imdb.com/chart/moviemeter/?sort=rk,asc&mode=simple&page=1").content
 soup1 = BeautifulSoup(r,"html.parser")
-full_list = soup1.find_all("td",{"class":"titleColumn"},limit=20)
+full_list = soup1.find_all("td",{"class":"titleColumn"},limit=50) # YOU CAN CHANGE THE NUMBER OF MOVIES IN THE MEMORY (limit=)
 
 for movie in full_list:
         link_bası = "https://www.imdb.com"
@@ -21,7 +21,10 @@ for movie in full_list:
         link = link_bası+ linksonu
         r1 = requests.get(link).content
         soup = BeautifulSoup(r1,"html.parser")
-        title = soup.find("h1",{"data-testid":"hero-title-block__title"}).text.strip()
+        try:
+                title = soup.find("h1",{"data-testid":"hero-title-block__title"}).text.strip()
+        except:
+                title = "isim bilgisi bulunamadı"        
         #print(title)
 
         explanation = soup.find("span",{"class":"sc-16ede01-2 gXUyNh"}).text.strip()
@@ -47,8 +50,7 @@ for movie in full_list:
         liste.append([title,time1,releaseTime,explanation,imdb,trailerLink])
         a = a+1
         print(f"the number of movie : {a}")
-        time.sleep(2)
-        clear_output()
+
         
 print("-----YOUR MOVIE RECOMMENDATION-----")        
 mv = random.choice(liste)
