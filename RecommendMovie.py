@@ -13,7 +13,7 @@ liste = []
 
 r = requests.get("https://www.imdb.com/chart/moviemeter/?sort=rk,asc&mode=simple&page=1").content
 soup1 = BeautifulSoup(r,"html.parser")
-full_list = soup1.find_all("td",{"class":"titleColumn"},limit=50) # YOU CAN CHANGE THE NUMBER OF MOVIES IN THE MEMORY (limit=)
+full_list = soup1.find_all("td",{"class":"titleColumn"}) # YOU CAN CHANGE THE NUMBER OF MOVIES IN THE MEMORY (limit=)
 
 for movie in full_list:
         link_bası = "https://www.imdb.com"
@@ -49,7 +49,7 @@ for movie in full_list:
         #print(trailerLink)
         liste.append([title,time1,releaseTime,explanation,imdb,trailerLink])
         a = a+1
-        print(f"the number of movie : {a}")
+print(f"the number of movie : {len(full_list)}")
 
         
 print("-----YOUR MOVIE RECOMMENDATION-----")        
